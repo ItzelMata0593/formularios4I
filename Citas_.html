@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title> PUNTO SALUD - Doctores </title>
+<title> PUNTO SALUD - Citas </title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
@@ -10,10 +10,10 @@ header { font-family:sans-serif; background-color:#C3E3FD; padding: 30px; text-a
 section { display: flex; align-items: stretch; min-height: max-content; }
 nav { float: left; width: 20%; background: #9ACEF8; padding: 20px; }
 article { font-family:sans-serif; float: left; width: 80%; background-color: #E8F5FF; text-align: center; display: flex; flex-direction: column; align-items: center; padding: 20px;}
-.form-container { max-width: 500px; width: 100%; background: white; padding: 35px; border-radius: 12px; margin-bottom: 30px;}
+.form-container { max-width: 500px; width: 100%; background: white; padding: 35px; border-radius: 12px; margin-bottom: 30px; }
 .form-group { margin-bottom: 22px; text-align: left; }
 label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 14px; }
-input[type="text"] { width: 100%; padding: 12px; border: 1px solid #C3E3FD; border-radius: 6px; color: #333; }
+input[type="text"], input[type="time"], input[type="date"], select { width: 100%; padding: 12px; border: 1px solid #C3E3FD; border-radius: 6px; color: #333; background: white; }
 .btn-submit { background-color: #6EB8F5; color: white; border: none; padding: 14px 15px; width: 100%; border-radius: 6px; font-size: 16px; margin-top: 10px; cursor: pointer; }
 .btn-submit:hover { background-color: #2874a6; }
 .btn-edit { background-color: #f39c12; color: white; border: none; padding: 14px 15px; width: 100%; border-radius: 6px; font-size: 16px; margin-top: 10px; display: none; cursor: pointer; }
@@ -32,129 +32,133 @@ footer { font-family:sans-serif; background-color: #6EB8F5; padding: 10px; text-
 <section>
   <nav>
     <ul>
-      <li><a href="index.html">Inicio</a></li>
+      <li><a href="Doctores_.html">Doctores</a></li>
       <li><a href="Pacientes_.html">Pacientes</a></li>
-      <li><a href="Citas_.html">Citas</a></li>
+      <li><a href="index.html">Inicio</a></li>
       <li><a href="Historial_.html">Historial</a></li>
     </ul>
   </nav>
   <article>
-    <h2> Doctores </h2>
+    <h2> Citas </h2>
     <div class="form-container">
         <form onsubmit="event.preventDefault();">
-          <input type="hidden" id="id_doctor_mongo">
-          <div class="form-group"><label>Apellidos:</label><input type="text" id="apellidos" required></div>
-          <div class="form-group"><label>Nombre:</label><input type="text" id="nombre" required></div>
-          <div class="form-group"><label>Cedula Profesional:</label><input type="text" id="cedula_profesional" required></div>
-          <div class="form-group"><label>Especialidad:</label><input type="text" id="especialidad" required></div>
-          <div class="form-group"><label>Disponibilidad:</label><input type="text" id="disponibilidad" placeholder="Ej. [Lun-Dom / 12:00-18:00]" required></div>
-          <div class="form-group"><label>Telefono:</label><input type="text" id="telefono" required></div>
-          <div class="form-group"><label>Correo:</label><input type="text" id="correo" required></div>
-          <div class="form-group"><label>Domicilio:</label><input type="text" id="domicilio" required></div>
-          <button type="button" id="btn-guardar" onclick="agregarDoctores()" class="btn-submit">Dar de alta el Doctor</button>
-          <button type="button" id="btn-actualizar" onclick="actualizarDoctor()" class="btn-edit">Confirmar Cambios</button>
+          <input type="hidden" id="id_cita_mongo">
+          <div class="form-group"><label>Fecha:</label><input type="date" id="fecha" required></div>
+          <div class="form-group"><label>Hora:</label><input type="time" id="hora" required></div>
+          <div class="form-group"><label>Motivo:</label><input type="text" id="motivo" required></div>
+          <div class="form-group">
+            <label>Medico:</label>
+            <select id="medico" required>
+                <option value="Villamizar">Villamizar</option>
+                <option value="Santamaria">Santamaria</option>
+                <option value="Alvarez">Alvarez</option>
+                <option value="Arboleda">Arboleda</option>
+                <option value="Casal">Casal</option>
+            </select>
+          </div>
+          <div class="form-group"><label>ID Paciente</label><input type="text" id="id" required></div>
+          <div class="form-group">
+            <label>Estado de la Cita</label>
+              <select id="estado" required>
+                <option value="Confirmada">Confirmada</option>
+                <option value="Pendiente">Pendiente</option>
+                <option value="Cancelada">Cancelada</option>
+              </select>
+          </div>
+          <button type="button" id="btn-guardar" onclick="agregarCitas()" class="btn-submit">Dar de alta la Cita</button>
+          <button type="button" id="btn-actualizar" onclick="actualizarCita()" class="btn-edit">Confirmar Cambios</button>
         </form>
     </div>
-    <h3>Listado de Médicos</h3>
-    <div id="listaDoctores" class="lista-container"></div>
+    <h3>Listado de Citas</h3>
+    <div id="listaCitas" class="lista-container"></div>
   </article>
 </section>
-<script>
-document.addEventListener("DOMContentLoaded", cargarDoctores);
+<script>  
+document.addEventListener("DOMContentLoaded", cargarCitas);
 
 function obtenerDatos() {
     return {
-        apellidos: document.getElementById("apellidos").value,
-        nombre: document.getElementById("nombre").value,
-        cedula_profesional: document.getElementById("cedula_profesional").value,
-        especialidad: document.getElementById("especialidad").value,
-        disponibilidad: document.getElementById("disponibilidad").value,
-        telefono: document.getElementById("telefono").value,
-        correo: document.getElementById("correo").value,
-        domicilio: document.getElementById("domicilio").value
+        fecha: document.getElementById("fecha").value,
+        hora: document.getElementById("hora").value,
+        motivo: document.getElementById("motivo").value,
+        medico: document.getElementById("medico").value,
+        id: document.getElementById("id").value,
+        estado: document.getElementById("estado").value
     };
 }
 
 function limpiar() {
-    document.getElementById("apellidos").value = "";
-    document.getElementById("nombre").value = "";
-    document.getElementById("cedula_profesional").value = "";
-    document.getElementById("especialidad").value = "";
-    document.getElementById("disponibilidad").value = "";
-    document.getElementById("telefono").value = "";
-    document.getElementById("correo").value = "";
-    document.getElementById("domicilio").value = "";
-    document.getElementById("id_doctor_mongo").value = "";
+    document.getElementById("fecha").value = "";
+    document.getElementById("hora").value = "";
+    document.getElementById("motivo").value = "";
+    document.getElementById("id").value = "";
+    document.getElementById("id_cita_mongo").value = "";
     document.getElementById("btn-guardar").style.display = "block";
     document.getElementById("btn-actualizar").style.display = "none";
 }
 
-async function cargarDoctores() {
+async function cargarCitas() {
     try {
-        const res = await fetch('/api/doctores');
-        const docs = await res.json();
-        const contenedor = document.getElementById("listaDoctores");
+        const res = await fetch('/api/citas');
+        const citas = await res.json();
+        const contenedor = document.getElementById("listaCitas");
         contenedor.innerHTML = "";
-        docs.forEach(d => {
+        citas.forEach(c => {
+            let fechaStr = c.fecha ? c.fecha.split('T')[0] : '';
             let card = document.createElement("div");
             card.classList.add("card");
             card.innerHTML = `
-                <h3>Dr(a). ${d.nombre} ${d.apellidos}</h3>
-                <p><strong>Especialidad:</strong> ${d.especialidad}</p>
-                <p><strong>Cédula:</strong> ${d.cedula_profesional}</p>
-                <p><strong>Horario:</strong> ${d.disponibilidad}</p>
-                <p><strong>Teléfono:</strong> ${d.telefono}</p>
-                <button class="btn-card-edit" onclick="prepararEditar('${d._id}','${d.apellidos}','${d.nombre}','${d.cedula_profesional}','${d.especialidad}','${d.disponibilidad}','${d.telefono}','${d.correo}','${d.domicilio}')">Editar</button>
-                <button class="btn-card-del" onclick="eliminarDoctor('${d._id}')">Eliminar</button>
+                <h3>Médico: ${c.medico}</h3>
+                <p><strong>Fecha:</strong> ${fechaStr} <strong>Hora:</strong> ${c.hora}</p>
+                <p><strong>Motivo:</strong> ${c.motivo}</p>
+                <p><strong>Paciente ID:</strong> ${c.id}</p>
+                <p><strong>Estado:</strong> ${c.estado}</p>
+                <button class="btn-card-edit" onclick="prepararEditar('${c._id}','${fechaStr}','${c.hora}','${c.motivo}','${c.medico}','${c.id}','${c.estado}')">Editar</button>
+                <button class="btn-card-del" onclick="eliminarCita('${c._id}')">Eliminar</button>
             `;
             contenedor.appendChild(card);
         });
     } catch (err) { console.error(err); }
 }
 
-async function agregarDoctores() {
+async function agregarCitas() {
     const datos = obtenerDatos();
     if(Object.values(datos).some(x => x === "")) return alert("Llena todos los campos");
     try {
-        const res = await fetch('/api/doctores', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(datos) });
-        if(res.ok) { alert("Doctor guardado"); limpiar(); cargarDoctores(); }
+        const res = await fetch('/api/citas', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(datos) });
+        if(res.ok) { alert("Cita registrada"); limpiar(); cargarCitas(); }
     } catch(e) { alert("Error"); }
 }
 
-function prepararEditar(mongoId, ape, nom, ced, esp, disp, tel, corr, dom) {
-    document.getElementById("id_doctor_mongo").value = mongoId;
-    document.getElementById("apellidos").value = ape;
-    document.getElementById("nombre").value = nom;
-    document.getElementById("cedula_profesional").value = ced;
-    document.getElementById("especialidad").value = esp;
-    document.getElementById("disponibilidad").value = disp;
-    document.getElementById("telefono").value = tel;
-    document.getElementById("correo").value = corr;
-    document.getElementById("domicilio").value = dom;
+function prepararEditar(mongoId, fec, hor, mot, med, idPac, est) {
+    document.getElementById("id_cita_mongo").value = mongoId;
+    document.getElementById("fecha").value = fec;
+    document.getElementById("hora").value = hor;
+    document.getElementById("motivo").value = mot;
+    document.getElementById("medico").value = med;
+    document.getElementById("id").value = idPac;
+    document.getElementById("estado").value = est;
     document.getElementById("btn-guardar").style.display = "none";
     document.getElementById("btn-actualizar").style.display = "block";
 }
 
-async function actualizarDoctor() {
-    const id = document.getElementById("id_doctor_mongo").value;
+async function actualizarCita() {
+    const id = document.getElementById("id_cita_mongo").value;
     const datos = obtenerDatos();
     try {
-        const res = await fetch(`/api/doctores/${id}`, { method: 'PUT', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(datos) });
-        if(res.ok) { alert("Doctor actualizado"); limpiar(); cargarDoctores(); }
+        const res = await fetch(`/api/citas/${id}`, { method: 'PUT', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(datos) });
+        if(res.ok) { alert("Cita actualizada"); limpiar(); cargarCitas(); }
     } catch(e) { alert("Error"); }
 }
 
-async function eliminarDoctor(id) {
-    if(!confirm("¿Eliminar este doctor?")) return;
+async function eliminarCita(id) {
+    if(!confirm("¿Eliminar esta cita?")) return;
     try {
-        const res = await fetch(`/api/doctores/${id}`, { method: 'DELETE' });
-        if(res.ok) { alert("Doctor eliminado"); cargarDoctores(); }
+        const res = await fetch(`/api/citas/${id}`, { method: 'DELETE' });
+        if(res.ok) { alert("Cita eliminada"); cargarCitas(); }
     } catch(e) { alert("Error"); }
 }
 </script>
 <footer><p>Mata Valdez Itzel Regina - 4ºI - Programacion - Implementa Bases De Datos No Relacionales En Un Sistema - 24308051280593</p> <img src="logo.jpg" alt="Logo"> </footer>
-</body>
-</html>
-
 </body>
 </html>
