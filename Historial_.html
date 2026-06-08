@@ -1,159 +1,149 @@
-<!DOCTYPE>
+<!DOCTYPE html>
 <html>
 <head>
-<title> PUNTO SALUD </title>
+<title> PUNTO SALUD - Historial </title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
-* {
-  box-sizing: border-box;
-}
-header {
-  font-family:sans-serif;
-  background-color:#C3E3FD;
-  padding: 30px;
-  text-align: center;
-  font-size: 35px;
-  color: #2196F3;
-}
-section {
-    display: flex;
-    align-items: stretch;
-    min-height: max-content;
-}
-nav {
-  float: left;
-  width: 20%;
-  background: #9ACEF8;
-  padding: 20px;
-}
-article {
-  font-family:sans-serif;
-  float: left;
-  width: 80%;
-  background-color: #E8F5FF;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.form-container {
-  max-width: 500px;
-  width: 100%;
-  background: white;
-  padding: 35px;
-  border-radius: 12px;
-}
-
-.form-group {
-  margin-bottom: 22px;
-}
-label {
-  display: block;
-  margin-bottom: 8px;
-  font-weight: 600;
-  font-size: 14px;
-}
-input[type="text"], input[type="number"], input[type="date"] {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid #C3E3FD;
-  border-radius: 6px;
-  color: #333;
-}
-input:focus {
-  outline: none;
-  border-color: #2196F3;
-}
-.btn-submit {
-  background-color: #6EB8F5;
-  color: white;
-  border: none;
-  padding: 14px 15px;
-  width: 100%;
-  border-radius: 6px;
-  font-size: 16px;
-  margin-top: 10px;
-}
-.btn-submit:hover {
-  background-color: #2874a6;
-}
-.btn-back {
-  display: inline-block;
-  text-align: center;
-  margin-top: 25px;
-}
-footer {
-  font-family:sans-serif;
-  background-color: #6EB8F5;
-  padding: 10px;
-  text-align: center;
-  color: white;
-}
+* { box-sizing: border-box; }
+header { font-family:sans-serif; background-color:#C3E3FD; padding: 30px; text-align: center; font-size: 35px; color: #2196F3; }
+section { display: flex; align-items: stretch; min-height: max-content; }
+nav { float: left; width: 20%; background: #9ACEF8; padding: 20px; }
+article { font-family:sans-serif; float: left; width: 80%; background-color: #E8F5FF; text-align: center; display: flex; flex-direction: column; align-items: center; padding: 20px;}
+.form-container { max-width: 500px; width: 100%; background: white; padding: 35px; border-radius: 12px; margin-bottom: 30px; }
+.form-group { margin-bottom: 22px; text-align: left; }
+label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 14px; }
+input[type="text"] { width: 100%; padding: 12px; border: 1px solid #C3E3FD; border-radius: 6px; color: #333; }
+.btn-submit { background-color: #6EB8F5; color: white; border: none; padding: 14px 15px; width: 100%; border-radius: 6px; font-size: 16px; margin-top: 10px; cursor: pointer; }
+.btn-submit:hover { background-color: #2874a6; }
+.btn-edit { background-color: #f39c12; color: white; border: none; padding: 14px 15px; width: 100%; border-radius: 6px; font-size: 16px; margin-top: 10px; display: none; cursor: pointer; }
+footer { font-family:sans-serif; background-color: #6EB8F5; padding: 10px; text-align: center; color: white; width: 100%; }
+.lista-container { width: 100%; max-width: 800px; display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; }
+.card { background: white; padding: 20px; border-radius: 8px; border-left: 5px solid #2196F3; text-align: left; width: 340px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+.btn-card-edit { background-color: #f1c40f; color: black; border: none; padding: 5px 10px; margin-right: 5px; border-radius: 4px; cursor: pointer; }
+.btn-card-del { background-color: #e74c3c; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; }
 </style>
 </head>
-
 <body>
 <header>
   <img src="logo.jpg" alt="Logo">
   <h1> Punto Salud </h1>
 </header>
-
 <section>
   <nav>
     <ul>
       <li><a href="Doctores_.html">Doctores</a></li>
       <li><a href="Pacientes_.html">Pacientes</a></li>
       <li><a href="Citas_.html">Citas</a></li>
-      <li><a href="index_.html">Inicio</a></li>
+      <li><a href="index.html">Inicio</a></li>
     </ul>
   </nav>
-  
   <article>
-<h2>  Historial </h2>
-
+    <h2> Historial Clínico </h2>
     <div class="form-container">
-
-            <div class="form-group">
-                <label>ID:</label>
-                <input type="text" required>
-            </div>
-           
-            <div class="form-group">
-                <label>Diagnostico:</label>
-                <input type="text" required>
-            </div>
-           
-            <div class="form-group">
-                <label>Medicamento:</label>
-                <input type="text" required>
-            </div>
-	
-  	    <div class="form-group">
-		<label>Presentacion:</label>
-                <input type="text" required>
-	    </div>
-
-	    <div class="form-group">
-		<label>Dosis:</label>
-		<input type="text" required>
-	   </div>
-
-	    <div class="form-group">
-		<label>Alergias:</label>
-		<input type="text" required>
-	   </div>
-
-            <button type="submit" class="btn-submit">Dar de alta el Historial</button>
+        <form onsubmit="event.preventDefault();">
+          <input type="hidden" id="id_historial_mongo">
+          <div class="form-group"><label>ID Paciente:</label><input type="text" id="id" required></div>
+          <div class="form-group"><label>Diagnostico:</label><input type="text" id="diagnostico" required></div>
+          <div class="form-group"><label>Medicamento:</label><input type="text" id="medicamento" required></div>
+          <div class="form-group"><label>Presentacion:</label><input type="text" id="presentacion" required></div>
+          <div class="form-group"><label>Dosis:</label><input type="text" id="dosis" required></div>
+          <div class="form-group"><label>Alergias:</label><input type="text" id="alergias" required></div>
+          <button type="button" id="btn-guardar" onclick="agregarHistorial()" class="btn-submit">Dar de alta el Historial</button>
+          <button type="button" id="btn-actualizar" onclick="actualizarHistorial()" class="btn-edit">Confirmar Cambios</button>
         </form>
     </div>
-
-</article>
+    <h3>Registros Clínicos</h3>
+    <div id="listaHistorial" class="lista-container"></div>
+  </article>
 </section>
+<script>  
+document.addEventListener("DOMContentLoaded", cargarHistoriales);
 
-<footer>
-  <p>Mata Valdez Itzel Regina - 4ºI - Programacion - 24308051280593</p>
-</footer>
+function obtenerDatos() {
+    return {
+        id: document.getElementById("id").value,
+        diagnostico: document.getElementById("diagnostico").value,
+        medicamento: document.getElementById("medicamento").value,
+        presentacion: document.getElementById("presentacion").value,
+        dosis: document.getElementById("dosis").value,
+        alergias: document.getElementById("alergias").value
+    };
+}
 
+function limpiar() {
+    document.getElementById("id").value = "";
+    document.getElementById("diagnostico").value = "";
+    document.getElementById("medicamento").value = "";
+    document.getElementById("presentacion").value = "";
+    document.getElementById("dosis").value = "";
+    document.getElementById("alergias").value = "";
+    document.getElementById("id_historial_mongo").value = "";
+    document.getElementById("btn-guardar").style.display = "block";
+    document.getElementById("btn-actualizar").style.display = "none";
+}
+
+async function cargarHistoriales() {
+    try {
+        const res = await fetch('/api/historial');
+        const hists = await res.json();
+        const contenedor = document.getElementById("listaHistorial");
+        contenedor.innerHTML = "";
+        hists.forEach(h => {
+            let card = document.createElement("div");
+            card.classList.add("card");
+            card.innerHTML = `
+                <h3>ID Paciente: ${h.id}</h3>
+                <p><strong>Diagnóstico:</strong> ${h.diagnostico}</p>
+                <p><strong>Tratamiento:</strong> ${h.medicamento} (${h.presentacion})</p>
+                <p><strong>Dosis:</strong> ${h.dosis}</p>
+                <p><strong>Alergias:</strong> ${h.alergias}</p>
+                <button class="btn-card-edit" onclick="prepararEditar('${h._id}','${h.id}','${h.diagnostico}','${h.medicamento}','${h.presentacion}','${h.dosis}','${h.alergias}')">Editar</button>
+                <button class="btn-card-del" onclick="eliminarHistorial('${h._id}')">Eliminar</button>
+            `;
+            contenedor.appendChild(card);
+        });
+    } catch (err) { console.error(err); }
+}
+
+async function agregarHistorial() {
+    const datos = obtenerDatos();
+    if(Object.values(datos).some(x => x === "")) return alert("Llena todos los campos");
+    try {
+        const res = await fetch('/api/historial', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(datos) });
+        if(res.ok) { alert("Historial registrado"); limpiar(); cargarHistoriales(); }
+    } catch(e) { alert("Error"); }
+}
+
+function prepararEditar(mongoId, idPac, diag, med, pres, dos, aler) {
+    document.getElementById("id_historial_mongo").value = mongoId;
+    document.getElementById("id").value = idPac;
+    document.getElementById("diagnostico").value = diag;
+    document.getElementById("medicamento").value = med;
+    document.getElementById("presentacion").value = pres;
+    document.getElementById("dosis").value = dos;
+    document.getElementById("alergias").value = aler;
+    document.getElementById("btn-guardar").style.display = "none";
+    document.getElementById("btn-actualizar").style.display = "block";
+}
+
+async function actualizarHistorial() {
+    const id = document.getElementById("id_historial_mongo").value;
+    const datos = obtenerDatos();
+    try {
+        const res = await fetch(`/api/historial/${id}`, { method: 'PUT', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(datos) });
+        if(res.ok) { alert("Historial actualizado"); limpiar(); cargarHistoriales(); }
+    } catch(e) { alert("Error"); }
+}
+
+async function eliminarHistorial(id) {
+    if(!confirm("¿Eliminar este registro de historial?")) return;
+    try {
+        const res = await fetch(`/api/historial/${id}`, { method: 'DELETE' });
+        if(res.ok) { alert("Historial eliminado"); cargarHistoriales(); }
+    } catch(e) { alert("Error"); }
+}
+</script>
+<footer><p>Mata Valdez Itzel Regina - 4ºI - Programacion - Implementa Bases De Datos No Relacionales En Un Sistema - 24308051280593</p> <img src="logo.jpg" alt="Logo"> </footer>
 </body>
 </html>
